@@ -79,4 +79,3 @@ func _ready():
 		else:
 			print("金钱不足")
 	)
-}
