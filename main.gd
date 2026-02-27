@@ -10,13 +10,11 @@ func _ready():
 	
 	# 连接开始按钮的点击信号
 	$StartButton.pressed.connect(func():
-		# 隐藏主页面元素
-		$ColorRect.visible = false
-		$Label.visible = false
-		$StartButton.visible = false
-		$QuitButton.visible = false
-		# 显示游戏世界
-		world.visible = true
+		# 加载地图场景
+		var map_scene = load("res://map.tscn")
+		if map_scene:
+			# 替换当前场景为地图场景
+			replace_with(map_scene.instantiate())
 	)
 	
 	# 连接退出按钮的点击信号
