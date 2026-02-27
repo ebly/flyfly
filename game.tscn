@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7k1q6q3k7l2b"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_7w6k7"]
+[ext_resource type="Script" path="res://player.gd" id="4_7x8k9"]
+[ext_resource type="Texture2D" path="res://assets/bg.png" id="3_8k9m5"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="2_9k8l4"]
+[ext_resource type="Script" path="res://enemy_generator.gd" id="6_7z0k1"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( "1_7w6k7" )
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="./World"]
+position = Vector2(1920, 1080)
+scale = Vector2(2, 2)
+texture = ExtResource( "3_8k9m5" )
+centered = true
+z_index = -10
+
+[node name="Player" type="CharacterBody2D" parent="./World"]
+position = Vector2(960, 540)
+script = ExtResource( "4_7x8k9" )
+collision_layer = 1
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="./World/Player"]
+position = Vector2(0, 0)
+texture = ExtResource( "2_9k8l4" )
+scale = Vector2(0.4, 0.4)
+
+[node name="EnemyGenerator" type="Node2D" parent="./World"]
+script = ExtResource( "6_7z0k1" )

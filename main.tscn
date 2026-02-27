@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://c2k1q6q3k7l15"]
+
+[ext_resource type="Script" uid="uid://sm0c8bdp0c7n" path="res://main.gd" id="1_7w6k7"]
+[ext_resource type="Texture2D" uid="uid://6bdyputq6nbn" path="res://icon.svg" id="2_9k8l4"]
+[ext_resource type="Texture2D" path="res://assets/bg.png" id="3_8k9m5"]
+[ext_resource type="Script" uid="uid://da06j5id3hvd4" path="res://player.gd" id="4_7x8k9"]
+[ext_resource type="Script" uid="uid://bb6gobmn6kluf" path="res://enemy_generator.gd" id="6_7z0k1"]
+
+[node name="Main" type="Control" unique_id=519932004]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7w6k7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=612557864]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1052609247]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3
+anchor_right = 0.5
+anchor_bottom = 0.3
+offset_left = -200.0
+offset_top = -30.0
+offset_right = 200.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "游戏标题"
+
+[node name="StartButton" type="Button" parent="." unique_id=1262507254]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+text = "开始游戏"
+
+[node name="QuitButton" type="Button" parent="." unique_id=1535525479]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.6
+anchor_right = 0.5
+anchor_bottom = 0.6
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+text = "退出游戏"
+
+[node name="World" type="Node2D" parent="." unique_id=1915920453]
+visible = false
+
+[node name="Background" type="Sprite2D" parent="World" unique_id=133842699]
+z_index = -10
+position = Vector2(1920, 1080)
+scale = Vector2(2, 2)
+texture = ExtResource("3_8k9m5")
+centered = true
+
+[node name="Player" type="CharacterBody2D" parent="World" unique_id=123456789]
+position = Vector2(960, 540)
+script = ExtResource("4_7x8k9")
+collision_layer = 1
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Player" unique_id=987654321]
+position = Vector2(0, 0)
+texture = ExtResource("2_9k8l4")
+scale = Vector2(0.4, 0.4)
+
+[node name="EnemyGenerator" type="Node2D" parent="World" unique_id=1290277152]
+script = ExtResource("6_7z0k1")

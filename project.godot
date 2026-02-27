@@ -1,0 +1,67 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="flyfly"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+config/icon="res://icon.svg"
+config/main_scene="res://main.tscn"
+
+[display]
+
+window/stretch/mode="viewport"
+window/size/width=1920
+window/size/height=1080
+
+[input]
+
+ui_left={
+"deadzone": 0.5,
+"events": [{
+"device": -1,
+"input_type": "keyboard",
+"keycode": 65
+}]
+}
+ui_right={
+"deadzone": 0.5,
+"events": [{
+"device": -1,
+"input_type": "keyboard",
+"keycode": 68
+}]
+}
+ui_up={
+"deadzone": 0.5,
+"events": [{
+"device": -1,
+"input_type": "keyboard",
+"keycode": 87
+}]
+}
+ui_down={
+"deadzone": 0.5,
+"events": [{
+"device": -1,
+"input_type": "keyboard",
+"keycode": 83
+}]
+}
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
