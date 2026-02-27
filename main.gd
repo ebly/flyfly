@@ -14,7 +14,7 @@ func _ready():
 		var map_scene = load("res://map.tscn")
 		if map_scene:
 			# 替换当前场景为地图场景
-			replace_with(map_scene.instantiate())
+			self.get_tree().change_scene_to_packed(map_scene)
 	)
 	
 	# 连接退出按钮的点击信号
