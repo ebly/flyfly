@@ -4,6 +4,9 @@ const SPEED = 100
 var bullet_scene = preload("res://bullet.tscn")
 var fire_timer = null
 
+# 全局变量，存储玩家的金钱
+var money = 0
+
 func _ready():
 	# 设置随机初始位置（四面八方）
 	var screen_size = get_viewport().get_visible_rect().size
@@ -58,6 +61,9 @@ func _physics_process(_delta):
 				var distance = position.distance_to(body.position)
 				if distance < 15: # 碰撞半径（缩小）
 					print("Enemy collided with player")
+					# 增加金钱
+					money += 1
+					print("获得1块钱，当前金钱: " + str(money))
 					body.queue_free()
 					queue_free()
 

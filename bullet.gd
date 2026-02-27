@@ -3,6 +3,9 @@ extends Area2D
 const SPEED = 800
 var direction = Vector2(1, 0) # 默认向右
 
+# 全局变量，存储玩家的金钱
+var money = 0
+
 func _ready():
 	# 设置子弹的生命周期
 	var timer = Timer.new()
@@ -20,6 +23,9 @@ func _ready():
 		if body is CharacterBody2D:
 			# 子弹击中飞机
 			print("Destroying body:", body.name)
+			# 增加金钱
+			money += 1
+			print("获得1块钱，当前金钱: " + str(money))
 			body.queue_free()
 			print("Destroying bullet")
 			queue_free()

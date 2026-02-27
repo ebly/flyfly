@@ -71,12 +71,124 @@ text = "困难"
 
 [node name="BackButton" type="Button" parent="."]
 anchors_preset = -1
-anchor_left = 0.5
+anchor_left = 0.4
 anchor_top = 0.6
-anchor_right = 0.5
+anchor_right = 0.4
 anchor_bottom = 0.6
 offset_left = -50.0
 offset_top = -25.0
 offset_right = 50.0
 offset_bottom = 25.0
 text = "返回"
+
+[node name="ShopButton" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.6
+anchor_right = 0.6
+anchor_bottom = 0.6
+offset_left = -50.0
+offset_top = -25.0
+offset_right = 50.0
+offset_bottom = 25.0
+text = "商店"
+
+[node name="Shop" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="./Shop"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="Label" type="Label" parent="./Shop"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.5
+anchor_bottom = 0.1
+offset_left = -100.0
+offset_top = -30.0
+offset_right = 100.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "商店"
+
+[node name="MoneyLabel" type="Label" parent="./Shop"]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.1
+anchor_bottom = 0.1
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 200.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "金钱: 0"
+
+[node name="ItemList" type="VBoxContainer" parent="./Shop"]
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.2
+anchor_right = 0.7
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Item1" type="HBoxContainer" parent="./Shop/ItemList"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="./Shop/ItemList/Item1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "武器升级"
+
+[node name="PriceLabel" type="Label" parent="./Shop/ItemList/Item1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "价格: 10"
+
+[node name="BuyButton" type="Button" parent="./Shop/ItemList/Item1"]
+layout_mode = 2
+text = "购买"
+
+[node name="Item2" type="HBoxContainer" parent="./Shop/ItemList"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="./Shop/ItemList/Item2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "护盾升级"
+
+[node name="PriceLabel" type="Label" parent="./Shop/ItemList/Item2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "价格: 15"
+
+[node name="BuyButton" type="Button" parent="./Shop/ItemList/Item2"]
+layout_mode = 2
+text = "购买"
+
+[node name="CloseButton" type="Button" parent="./Shop"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.85
+anchor_right = 0.5
+anchor_bottom = 0.85
+offset_left = -50.0
+offset_top = -25.0
+offset_right = 50.0
+offset_bottom = 25.0
+text = "关闭"
