@@ -1,0 +1,238 @@
+[gd_scene format=3 uid="uid://c7k1q6q3k7l2b"]
+
+[ext_resource type="Script" uid="uid://f60mktefk0y3" path="res://managers/game.gd" id="1_7w6k7"]
+[ext_resource type="Texture2D" uid="uid://icdedq61ip48" path="res://icon.svg" id="2_9k8l4"]
+[ext_resource type="Texture2D" uid="uid://bvf81nl6twq4c" path="res://assets/bg.png" id="3_8k9m5"]
+[ext_resource type="Script" uid="uid://brqxnn7xeb1en" path="res://entities/player.gd" id="4_7x8k9"]
+[ext_resource type="Texture2D" uid="uid://dgbfdhmvvqll3" path="res://assets/skills.png" id="5_b9l74"]
+[ext_resource type="Script" uid="uid://dabm6t3wwhjlr" path="res://managers/enemy_generator.gd" id="6_7z0k1"]
+[ext_resource type="Script" uid="uid://csmelw0jbhkjg" path="res://managers/visibility_manager.gd" id="7_8a9k0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skill1"]
+atlas = ExtResource("5_b9l74")
+region = Rect2(210, 0, 90, 90)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 20.0
+
+[node name="Main" type="Control" unique_id=1893039109]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7w6k7")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1446545094]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 40.0
+grow_horizontal = 0
+text = "积分: 0"
+horizontal_alignment = 2
+
+[node name="MoneyLabel" type="Label" parent="." unique_id=1593162694]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 40.0
+offset_right = -20.0
+offset_bottom = 60.0
+grow_horizontal = 0
+text = "金钱: 0"
+horizontal_alignment = 2
+
+[node name="HealthContainer" type="HBoxContainer" parent="." unique_id=2094487985]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 50.0
+theme_override_constants/separation = 5
+
+[node name="HealthBox1" type="Panel" parent="HealthContainer" unique_id=3181986]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="HealthBox2" type="Panel" parent="HealthContainer" unique_id=1962036386]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="HealthBox3" type="Panel" parent="HealthContainer" unique_id=1952430442]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="HealthBox4" type="Panel" parent="HealthContainer" unique_id=1831230861]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="HealthBox5" type="Panel" parent="HealthContainer" unique_id=1827235432]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="ScoreProgressBar" type="ProgressBar" parent="." unique_id=183142992]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 80.0
+offset_right = 400.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+
+[node name="ScoreLabel" type="Label" parent="ScoreProgressBar" unique_id=828988966]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -15.0
+offset_right = 100.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0 / 1000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AbilityContainer" type="HBoxContainer" parent="." unique_id=903977027]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -45.0
+offset_top = -90.0
+offset_right = 45.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="BulletIcon" type="TextureRect" parent="AbilityContainer" unique_id=1756373596]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_skill1")
+stretch_mode = 1
+
+[node name="World" type="Node2D" parent="." unique_id=173896384]
+
+[node name="Background" type="Sprite2D" parent="World" unique_id=194809331]
+z_index = -10
+position = Vector2(1912, 843)
+scale = Vector2(2, 2)
+texture = ExtResource("3_8k9m5")
+
+[node name="Player" type="CharacterBody2D" parent="World" unique_id=1887611076]
+position = Vector2(960, 540)
+collision_mask = 2
+script = ExtResource("4_7x8k9")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player" unique_id=1280390566]
+shape = SubResource("CircleShape2D_player")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Player" unique_id=1228586057]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_9k8l4")
+
+[node name="PickupArea" type="Area2D" parent="World/Player" unique_id=1546661510]
+collision_mask = 4
+
+[node name="PickupCollisionShape2D" type="CollisionShape2D" parent="World/Player/PickupArea" unique_id=1178313892]
+shape = SubResource("CircleShape2D_player")
+
+[node name="EnemyGenerator" type="Node2D" parent="World" unique_id=664293154]
+script = ExtResource("6_7z0k1")
+
+[node name="VisibilityManager" type="Node" parent="World" unique_id=2131754503]
+script = ExtResource("7_8a9k0")
+
+[node name="GameOverPanel" type="Panel" parent="." unique_id=1691370886]
+visible = false
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="GameOverPanel" unique_id=751166600]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 70.0
+grow_horizontal = 2
+text = "游戏结束"
+horizontal_alignment = 1
+
+[node name="EnemiesKilledLabel" type="Label" parent="GameOverPanel" unique_id=777357610]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 100.0
+offset_right = 200.0
+offset_bottom = 140.0
+grow_horizontal = 2
+text = "击败敌机: 0"
+horizontal_alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="GameOverPanel" unique_id=226070063]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 160.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+text = "获得金钱: 0"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="GameOverPanel" unique_id=2070695557]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 220.0
+offset_right = 200.0
+offset_bottom = 260.0
+grow_horizontal = 2
+text = "获得积分: 0"
+horizontal_alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="GameOverPanel" unique_id=41237962]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -80.0
+offset_right = 75.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "确认"

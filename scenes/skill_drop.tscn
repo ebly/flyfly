@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://skilldrop001"]
+
+[ext_resource type="Script" uid="uid://cosu2p6x5ht7g" path="res://entities/skill_drop.gd" id="1_skill"]
+[ext_resource type="Texture2D" uid="uid://8whqcus61hr4" path="res://assets/skills.png" id="2_skills"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_skill"]
+size = Vector2(10, 10)
+
+# 技能图标区域配置
+[sub_resource type="AtlasTexture" id="AtlasTexture_dash"]
+atlas = ExtResource("2_skills")
+region = Rect2(0, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shield"]
+atlas = ExtResource("2_skills")
+region = Rect2(105, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rapid_fire"]
+atlas = ExtResource("2_skills")
+region = Rect2(210, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_missile"]
+atlas = ExtResource("2_skills")
+region = Rect2(0, 105, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laser"]
+atlas = ExtResource("2_skills")
+region = Rect2(105, 105, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bomb"]
+atlas = ExtResource("2_skills")
+region = Rect2(210, 105, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_homing"]
+atlas = ExtResource("2_skills")
+region = Rect2(0, 210, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explosion"]
+atlas = ExtResource("2_skills")
+region = Rect2(105, 210, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spread_shot"]
+atlas = ExtResource("2_skills")
+region = Rect2(210, 210, 90, 90)
+
+[node name="SkillDrop" type="Area2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_skill")
+
+[node name="SkillIcon" type="TextureRect" parent="."]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+stretch_mode = 1
+scale = Vector2(0.25, 0.25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_skill")
