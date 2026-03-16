@@ -24,6 +24,17 @@ var current_score: int = 0
 var player_health: int = 5
 var player_max_health: int = 5
 
+# 属性等级
+var property_levels: Dictionary = {
+	"damage": 1,
+	"range": 1,
+	"bullet_speed": 1,
+	"fire_rate": 1,
+	"move_speed": 1,
+	"blood": 1,
+	"armor": 1
+}
+
 # 游戏状态
 var is_game_active: bool = false
 var is_paused: bool = false
@@ -77,6 +88,19 @@ func unlock_skill(skill_id: String) -> bool:
 
 func has_skill(skill_id: String) -> bool:
 	return current_skills.has(skill_id)
+
+# ============================================
+# 属性等级方法
+# ============================================
+
+func get_property_level(property_name: String) -> int:
+	if property_levels.has(property_name):
+		return property_levels[property_name]
+	return 1
+
+func set_property_level(property_name: String, level: int) -> void:
+	if property_levels.has(property_name):
+		property_levels[property_name] = max(1, min(10, level))  # 限制在1-10级
 
 # ============================================
 # 游戏状态方法

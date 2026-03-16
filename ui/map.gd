@@ -58,6 +58,9 @@ func _ready() -> void:
 	# 连接商店按钮的点击信号
 	$ShopButton.pressed.connect(func() -> void: _open_shop())
 
+	# 连接机舱按钮的点击信号
+	$CabinButton.pressed.connect(func() -> void: _open_cabin())
+
 # 连接事件总线
 func _connect_events() -> void:
 	EventBus.game_over.connect(_on_game_over)
@@ -110,6 +113,15 @@ func _open_shop() -> void:
 		shop.current_money = current_money
 		shop.current_skills = current_skills
 		get_tree().root.add_child(shop)
+
+# 打开机舱
+func _open_cabin() -> void:
+	var cabin_scene: PackedScene = load("res://scenes/aircraft_cabin.tscn") as PackedScene
+	if cabin_scene:
+		var cabin: Node = cabin_scene.instantiate()
+		cabin.current_money = current_money
+		cabin.current_skills = current_skills
+		get_tree().root.add_child(cabin)
 
 # 游戏结束回调
 func _on_game_over(is_victory: bool, score: int, money: int) -> void:

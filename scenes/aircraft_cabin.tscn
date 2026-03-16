@@ -1,0 +1,190 @@
+[gd_scene format=3 uid="uid://d1k2l3m4n5o6p"]
+
+[ext_resource type="Script" uid="uid://e1f2g3h4i5j6k" path="res://ui/aircraft_cabin.gd" id="1_2w6k7"]
+
+[node name="AircraftCabin" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2w6k7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="TitleLabel" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.5
+anchor_bottom = 0.1
+offset_left = -150.0
+offset_top = -30.0
+offset_right = 150.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "飞机机舱"
+
+[node name="AircraftContainer" type="Control" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AircraftSprite" type="Sprite2D" parent="./AircraftContainer"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+
+[node name="PropertyGrid" type="Control" parent="./AircraftContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+# 7个属性格子，按顺时针排列
+[node name="PropertySlot1" type="Button" parent="./AircraftContainer/PropertyGrid"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -30.0
+offset_top = 0.0
+offset_right = 30.0
+offset_bottom = 60.0
+text = "伤害"
+
+[node name="PropertySlot2" type="Button" parent="./AircraftContainer/PropertyGrid"]
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.2
+anchor_right = 0.7
+anchor_bottom = 0.2
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+text = "射程"
+
+[node name="PropertySlot3" type="Button" parent="./AircraftContainer/PropertyGrid"]
+anchors_preset = -1
+anchor_left = 0.85
+anchor_top = 0.5
+anchor_right = 0.85
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+text = "子弹速度"
+
+[node name="PropertySlot4" type="Button" parent="./AircraftContainer/PropertyGrid"]
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.8
+anchor_right = 0.7
+anchor_bottom = 0.8
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+text = "射速"
+
+[node name="PropertySlot5" type="Button" parent="./AircraftContainer/PropertyGrid"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_top = -60.0
+offset_right = 30.0
+offset_bottom = 0.0
+text = "移动速度"
+
+[node name="PropertySlot6" type="Button" parent="./AircraftContainer/PropertyGrid"]
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.8
+anchor_right = 0.3
+anchor_bottom = 0.8
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+text = "血量"
+
+[node name="PropertySlot7" type="Button" parent="./AircraftContainer/PropertyGrid"]
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.5
+anchor_right = 0.15
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+text = "护甲"
+
+[node name="LevelDisplay" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.8
+anchor_right = 0.5
+anchor_bottom = 0.8
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "属性等级: "
+
+[node name="MoneyDisplay" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.1
+anchor_bottom = 0.1
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 200.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "金钱: 0"
+
+[node name="CloseButton" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.9
+anchor_right = 0.5
+anchor_bottom = 0.9
+offset_left = -50.0
+offset_top = -25.0
+offset_right = 50.0
+offset_bottom = 25.0
+text = "关闭"
