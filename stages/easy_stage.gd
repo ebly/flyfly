@@ -40,6 +40,7 @@ func get_enemy_config(wave: int) -> Dictionary:
 			}
 			config["max_enemies"] = 500  # 增加敌人数
 			config["spawn_interval"] = 0.8  # 减少生成间隔，敌人出现更快
+			config["enemies_per_spawn"] = 3  # 每次生成3个敌人
 			config["elite_chance"] = 0.0
 				
 		2:
@@ -52,6 +53,7 @@ func get_enemy_config(wave: int) -> Dictionary:
 			}
 			config["max_enemies"] = 600  # 增加敌人数
 			config["spawn_interval"] = 0.7  # 减少生成间隔，敌人出现更快
+			config["enemies_per_spawn"] = 4  # 每次生成4个敌人
 			config["elite_chance"] = 0.05
 			
 		3:
@@ -64,6 +66,7 @@ func get_enemy_config(wave: int) -> Dictionary:
 			}
 			config["max_enemies"] = 800  # 增加敌人数
 			config["spawn_interval"] = 0.6  # 减少生成间隔，敌人出现更快
+			config["enemies_per_spawn"] = 5  # 每次生成5个敌人
 			config["elite_chance"] = 0.1
 			
 		4:
@@ -77,6 +80,7 @@ func get_enemy_config(wave: int) -> Dictionary:
 			}
 			config["max_enemies"] = 900  # 增加敌人数
 			config["spawn_interval"] = 0.5  # 减少生成间隔，敌人出现更快
+			config["enemies_per_spawn"] = 6  # 每次生成6个敌人
 			config["elite_chance"] = 0.15
 			
 		5:
@@ -91,6 +95,7 @@ func get_enemy_config(wave: int) -> Dictionary:
 			}
 			config["max_enemies"] = 1000  # 增加敌人数
 			config["spawn_interval"] = 0.4  # 减少生成间隔，敌人出现更快
+			config["enemies_per_spawn"] = 8  # 每次生成8个敌人
 			config["elite_chance"] = 0.2
 				
 		_:

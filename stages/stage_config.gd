@@ -74,6 +74,7 @@ func get_base_enemy_config() -> Dictionary:
 		"spawn_weights": {},
 		"max_enemies": max_enemies_per_wave,
 		"spawn_interval": spawn_interval,
+		"enemies_per_spawn": 3,  # 每次生成的敌人数量
 		"elite_chance": 0.0,
 		"boss_wave": false
 	}

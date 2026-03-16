@@ -9,6 +9,7 @@ var spawn_timer: Timer = null
 var max_enemies: int = 20
 var spawned_enemies: int = 0
 var current_wave: int = 1
+var enemies_per_spawn: int = 3  # 每次生成的敌人数量
 
 # 关卡相关
 var stage_manager: StageManager = null
@@ -56,7 +57,8 @@ func _update_wave_config(wave: int) -> void:
 	if not enemy_config.is_empty():
 		max_enemies = enemy_config.get("max_enemies", max_enemies)
 		spawn_timer.wait_time = enemy_config.get("spawn_interval", spawn_timer.wait_time)
-		print("第 " + str(wave) + " 波配置已更新，最大敌人: " + str(max_enemies))
+		enemies_per_spawn = enemy_config.get("enemies_per_spawn", enemies_per_spawn)
+		print("第 " + str(wave) + " 波配置已更新，最大敌人: " + str(max_enemies) + ", 每次生成: " + str(enemies_per_spawn))
 
 func _on_spawn_timer_timeout() -> void:
 	if spawned_enemies >= max_enemies:
@@ -64,7 +66,12 @@ func _on_spawn_timer_timeout() -> void:
 		print("当前波次已生成所有敌人 (" + str(spawned_enemies) + "/" + str(max_enemies) + ")，停止生成")
 		return
 	
-	_spawn_enemy()
+	# 每次生成多个敌人
+	var enemies_to_spawn = min(enemies_per_spawn, max_enemies - spawned_enemies)
+	for i in range(enemies_to_spawn):
+		_spawn_enemy()
+		# 短暂延迟，避免所有敌人在同一帧生成
+		await get_tree().process_frame
 
 func _spawn_enemy() -> void:
 	var enemy_type: String = _get_random_enemy_type()
