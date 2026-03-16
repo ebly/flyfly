@@ -250,9 +250,9 @@ func _get_base_drop_config() -> Dictionary:
 		"enemy_basic", "enemy_drone":
 			return {"chance": 0.0, "skills": []}
 		"enemy_fast":
-			return {"chance": 0.08, "skills": SKILL_RARITY["common"]}
+			return {"chance": 0.08, "skills": ["dash"]}  # 快速飞机掉落dash技能
 		"enemy_heavy":
-			return {"chance": 0.12, "skills": SKILL_RARITY["common"] + SKILL_RARITY["uncommon"]}
+			return {"chance": 0.12, "skills": ["shield"]}  # 防护飞机（重型）掉落shield技能
 		"enemy_kamikaze":
 			return {"chance": 0.06, "skills": SKILL_RARITY["common"]}
 		"enemy_elite":
