@@ -1,7 +1,6 @@
 extends Control
 
-@onready var GlobalState: Node = get_node("/root/GlobalState")
-
+var GlobalState: Node = null
 var world: Node = null
 var screen_size: Vector2 = Vector2(1920, 1080)
 var map_size: Vector2 = Vector2(3840, 2160) # 放大后的地图尺寸
@@ -9,35 +8,44 @@ var score_label: Label = null
 var money_label: Label = null
 
 func _ready() -> void:
-	world = get_node("World")
+	# 安全获取节点
+	GlobalState = get_node_or_null("/root/GlobalState")
+	world = get_node_or_null("World")
 	screen_size = get_viewport().get_visible_rect().size
 	
-	# 获取显示控件
-	score_label = $ScoreLabel
-	money_label = $MoneyLabel
+	# 获取显示控件（带安全检查）
+	score_label = $ScoreLabel if has_node("ScoreLabel") else null
+	money_label = $MoneyLabel if has_node("MoneyLabel") else null
 	
 	# 初始化全局状态（如果是新会话）
-	if GlobalState.instance == null:
-		var gs: Node = GlobalState.new()
-		add_child(gs)
+	if GlobalState == null or GlobalState.instance == null:
+		var gs: Node = GlobalState.new() if GlobalState != null else null
+		if gs:
+			add_child(gs)
 	
 	# 初始化显示
 	_update_ui()
 
 	# 连接开始按钮的点击信号
-	$StartButton.pressed.connect(func() -> void:
-		# 加载地图场景
-		var map_scene: PackedScene = load("res://scenes/map.tscn") as PackedScene
-		if map_scene:
-			# 替换当前场景为地图场景
-			self.get_tree().change_scene_to_packed(map_scene)
-	)
+	if has_node("StartButton"):
+		$StartButton.pressed.connect(func() -> void:
+			# 加载地图场景
+			var map_scene: PackedScene = load("res://scenes/map.tscn") as PackedScene
+			if map_scene:
+				# 替换当前场景为地图场景
+				self.get_tree().change_scene_to_packed(map_scene)
+		)
+	else:
+		print("警告: 未找到 StartButton 节点")
 
 	# 连接退出按钮的点击信号
-	$QuitButton.pressed.connect(func() -> void:
-		# 退出游戏
-		get_tree().quit()
-	)
+	if has_node("QuitButton"):
+		$QuitButton.pressed.connect(func() -> void:
+			# 退出游戏
+			get_tree().quit()
+		)
+	else:
+		print("警告: 未找到 QuitButton 节点")
 
 func _process(_delta: float) -> void:
 	if world and world.visible and has_node("World/Player"):

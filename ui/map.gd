@@ -19,9 +19,9 @@ func _ready() -> void:
 		var gs: Node = GlobalState.new()
 		add_child(gs)
 	
-	# 获取显示控件
-	score_label = $ScoreLabel
-	money_label = $MoneyLabel
+	# 获取显示控件（带安全检查）
+	score_label = $ScoreLabel if has_node("ScoreLabel") else null
+	money_label = $MoneyLabel if has_node("MoneyLabel") else null
 	
 	# 从全局状态恢复数据
 	if GlobalState.instance != null:
@@ -39,27 +39,45 @@ func _ready() -> void:
 	_update_ui()
 	
 	# 连接简单难度点的点击信号
-	$EasyPoint.pressed.connect(func() -> void: _start_game("easy"))
+	if has_node("EasyPoint"):
+		$EasyPoint.pressed.connect(func() -> void: _start_game("easy"))
+	else:
+		print("警告: 未找到 EasyPoint 节点")
 
 	# 连接中等难度点的点击信号
-	$MediumPoint.pressed.connect(func() -> void: _start_game("medium"))
+	if has_node("MediumPoint"):
+		$MediumPoint.pressed.connect(func() -> void: _start_game("medium"))
+	else:
+		print("警告: 未找到 MediumPoint 节点")
 
 	# 连接困难难度点的点击信号
-	$HardPoint.pressed.connect(func() -> void: _start_game("hard"))
+	if has_node("HardPoint"):
+		$HardPoint.pressed.connect(func() -> void: _start_game("hard"))
+	else:
+		print("警告: 未找到 HardPoint 节点")
 
 	# 连接返回按钮的点击信号
-	$BackButton.pressed.connect(func() -> void:
-		# 加载主页面场景
-		var main_scene: PackedScene = load("res://scenes/main.tscn") as PackedScene
-		if main_scene:
-			self.get_tree().change_scene_to_packed(main_scene)
-	)
+	if has_node("BackButton"):
+		$BackButton.pressed.connect(func() -> void:
+			# 加载主页面场景
+			var main_scene: PackedScene = load("res://scenes/main.tscn") as PackedScene
+			if main_scene:
+				self.get_tree().change_scene_to_packed(main_scene)
+		)
+	else:
+		print("警告: 未找到 BackButton 节点")
 
 	# 连接商店按钮的点击信号
-	$ShopButton.pressed.connect(func() -> void: _open_shop())
+	if has_node("ShopButton"):
+		$ShopButton.pressed.connect(func() -> void: _open_shop())
+	else:
+		print("警告: 未找到 ShopButton 节点")
 
 	# 连接机舱按钮的点击信号
-	$CabinButton.pressed.connect(func() -> void: _open_cabin())
+	if has_node("CabinButton"):
+		$CabinButton.pressed.connect(func() -> void: _open_cabin())
+	else:
+		print("警告: 未找到 CabinButton 节点")
 
 # 连接事件总线
 func _connect_events() -> void:
@@ -172,4 +190,5 @@ func _update_ui() -> void:
 	# 同步到商店显示
 	if has_node("Shop") and has_node("Shop/MoneyLabel"):
 		var shop_money_label: Label = $Shop/MoneyLabel
-		shop_money_label.text = "金钱: " + str(current_money)
+		if shop_money_label != null:
+			shop_money_label.text = "金钱: " + str(current_money)

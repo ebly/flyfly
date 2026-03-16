@@ -29,7 +29,7 @@ var property_name_map: Dictionary = {
 	"range": "射程",
 	"bullet_speed": "子弹速度",
 	"fire_rate": "射速",
-	"move_speed": "移动速度",
+	"move_speed": "移速",
 	"blood": "血量",
 	"armor": "护甲"
 }
@@ -46,36 +46,116 @@ var upgrade_costs: Dictionary = {
 }
 
 func _ready() -> void:
-	# 获取UI控件
-	money_display = $MoneyDisplay
-	level_display = $LevelDisplay
-	close_button = $CloseButton
+	# 基础调试信息
+	print("=== AircraftCabin _ready() 开始 ===")
+	print("当前节点: " + self.name)
+	print("当前节点类型: " + self.get_class())
 	
-	# 收集属性按钮
-	property_buttons = [
-		$AircraftContainer/PropertyGrid/PropertySlot1,  # 伤害
-		$AircraftContainer/PropertyGrid/PropertySlot2,  # 射程
-		$AircraftContainer/PropertyGrid/PropertySlot3,  # 子弹速度
-		$AircraftContainer/PropertyGrid/PropertySlot4,  # 射速
-		$AircraftContainer/PropertyGrid/PropertySlot5,  # 移动速度
-		$AircraftContainer/PropertyGrid/PropertySlot6,  # 血量
-		$AircraftContainer/PropertyGrid/PropertySlot7   # 护甲
-	]
+	# 获取基础UI控件
+	money_display = get_node_or_null("MoneyDisplay")
+	level_display = get_node_or_null("LevelDisplay")
+	close_button = get_node_or_null("CloseButton")
 	
-	# 连接信号
-	close_button.pressed.connect(_on_close_button_pressed)
+	# 连接关闭按钮信号
+	if close_button:
+		close_button.pressed.connect(_on_close_button_pressed)
 	
-	# 连接属性按钮信号
-	for i in range(property_buttons.size()):
+	# 动态创建所有需要的节点
+	property_buttons = []
+	
+	# 1. 获取或创建AircraftContainer
+	var container = get_node_or_null("AircraftContainer")
+	if not container:
+		print("创建AircraftContainer节点")
+		container = Control.new()
+		container.name = "AircraftContainer"
+		container.anchors_preset = -1
+		container.anchor_left = 0.5
+		container.anchor_top = 0.5
+		container.anchor_right = 0.5
+		container.anchor_bottom = 0.5
+		container.offset_left = -150.0
+		container.offset_top = -150.0
+		container.offset_right = 150.0
+		container.offset_bottom = 150.0
+		add_child(container)
+	
+	# 2. 获取或创建PropertyGrid
+	var property_grid = container.get_node_or_null("PropertyGrid")
+	if not property_grid:
+		print("创建PropertyGrid节点")
+		property_grid = Control.new()
+		property_grid.name = "PropertyGrid"
+		property_grid.anchors_preset = 15
+		property_grid.anchor_right = 1.0
+		property_grid.anchor_bottom = 1.0
+		container.add_child(property_grid)
+	
+	# 3. 创建7个属性按钮
+	print("创建7个属性按钮")
+	
+	# 按钮配置：[位置(左, 上), 文本, 尺寸(宽, 高)]
+	var button_configs = []
+	button_configs.append([0.5, 0.1, "伤害", 80, 40])    # 上方：左, 上, 文本, 宽, 高
+	button_configs.append([0.75, 0.2, "射速", 80, 40])   # 右上角：左, 上, 文本, 宽, 高
+	button_configs.append([0.85, 0.5, "子弹速度", 80, 40]) # 右侧中间：左, 上, 文本, 宽, 高
+	button_configs.append([0.75, 0.8, "护甲", 80, 40])   # 右下角：左, 上, 文本, 宽, 高
+	button_configs.append([0.5, 0.9, "飞行速度", 80, 40]) # 下方：左, 上, 文本, 宽, 高
+	button_configs.append([0.25, 0.8, "血量", 80, 40])   # 左下角：左, 上, 文本, 宽, 高
+	button_configs.append([0.15, 0.5, "射程", 80, 40])    # 左上角：左, 上, 文本, 宽, 高
+	
+	for i in range(button_configs.size()):
+		var config = button_configs[i]
+		var left = config[0]
+		var top = config[1]
+		var text = config[2]
+		var width = config[3]
+		var height = config[4]
+		
+		# 创建按钮
+		var button = Button.new()
+		button.name = "PropertySlot" + str(i+1)
+		button.text = text
+		
+		# 设置锚点和位置
+		button.anchors_preset = -1
+		button.anchor_left = left
+		button.anchor_top = top
+		button.anchor_right = left
+		button.anchor_bottom = top
+		button.offset_left = -width/2
+		button.offset_top = -height/2
+		button.offset_right = width/2
+		button.offset_bottom = height/2
+		
+		# 添加到PropertyGrid
+		property_grid.add_child(button)
+		
+		# 添加到数组
+		property_buttons.append(button)
+		
+		# 连接信号
 		var property_name = get_property_name_by_index(i)
-		if property_name:
-			property_buttons[i].pressed.connect(func(pn = property_name): _on_property_button_pressed(pn))
+		button.pressed.connect(func(pn = property_name): _on_property_button_pressed(pn))
+		
+		print("已创建: " + button.name + " (" + text + ")")
+	
+	# 调试信息
+	print("\n=== 节点创建结果 ===")
+	print("收集到的属性按钮数量: " + str(property_buttons.size()))
+	for i in range(property_buttons.size()):
+		if property_buttons[i]:
+			print("按钮[" + str(i+1) + "]: " + property_buttons[i].name + " (类型: " + property_buttons[i].get_class() + ")")
+		else:
+			print("按钮[" + str(i+1) + "]: null")
 	
 	# 从全局状态加载数据
 	_load_from_global_state()
 	
 	# 初始化显示
 	_update_display()
+	
+	print("=== AircraftCabin _ready() 结束 ===")
 
 func _on_close_button_pressed() -> void:
 	# 关闭界面
@@ -122,13 +202,15 @@ func _upgrade_property(property_name: String) -> void:
 
 func _update_display() -> void:
 	# 更新金钱显示
-	money_display.text = "金钱: " + str(current_money)
+	if money_display != null:
+		money_display.text = "金钱: " + str(current_money)
 	
 	# 更新等级显示
 	var level_text = "属性等级: "
 	for property_name in property_name_map.keys():
 		level_text += property_name_map[property_name] + ":" + str(property_levels[property_name]) + " "
-	level_display.text = level_text
+	if level_display != null:
+		level_display.text = level_text
 	
 	# 更新属性按钮文本
 	for i in range(property_buttons.size()):
@@ -138,16 +220,17 @@ func _update_display() -> void:
 			var cost = upgrade_costs[property_name]
 			var button = property_buttons[i]
 			
-			if current_level >= 10:
-				button.text = property_name_map[property_name] + " (MAX)"
-				button.disabled = true
-			else:
-				button.text = property_name_map[property_name] + " (Lv" + str(current_level) + ")"
-				button.disabled = current_money < cost
+			if button != null:
+				if current_level >= 10:
+					button.text = property_name_map[property_name] + " (MAX)"
+					button.disabled = true
+				else:
+					button.text = property_name_map[property_name] + " (Lv" + str(current_level) + ")"
+					button.disabled = current_money < cost
 
 func get_property_name_by_index(index: int) -> String:
-	# 根据索引获取属性名称
-	var property_names = ["damage", "range", "bullet_speed", "fire_rate", "move_speed", "blood", "armor"]
+	# 根据索引获取属性名称（与按钮位置对应）
+	var property_names = ["damage", "fire_rate", "bullet_speed", "armor", "move_speed", "blood", "range"]
 	if index >= 0 and index < property_names.size():
 		return property_names[index]
 	return ""

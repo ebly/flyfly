@@ -92,7 +92,7 @@ func async_load_resource(path: String, callback: Callable, auto_unload_time: flo
 	_async_tasks[task_id] = task
 	
 	# 使用同步加载资源包 (Godot 4.x 使用 ProjectSettings.load_resource_pack)
-	var success = ProjectSettings.load_resource_pack(path)
+	var _success = ProjectSettings.load_resource_pack(path)
 	
 	# 直接调用完成处理函数
 	_on_async_resource_loaded(task_id, path, null)
